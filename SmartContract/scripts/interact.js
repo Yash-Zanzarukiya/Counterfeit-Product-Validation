@@ -7,12 +7,19 @@ async function main() {
   const CPVContractFactory = await ethers.getContractFactory("CPVContract");
   CPVContract = await CPVContractFactory.attach(CONTRACT_ADDRESS);
 
-  //Updating the current message
-  const tx = await CPVContract.registerProduct("k2d8xa", "Jaguar", "TATA");
-  await tx.wait();
+  //Registering the Product
+  console.log("Sending Transaction for Registering Product...");
+  const txn = await CPVContract.registerProduct("vk18vk", "Wragon", "Virat Kohli");
+  await txn.wait();
 
-  const prodInfo = await CPVContract.getProduct("k2d8xa");
-  console.log("Product Detail is " + prodInfo);
+  // getting product info
+  console.log("Reading Chaindata for getting Product info...");
+  let prodInfo = await CPVContract.getProduct("vk18vk");
+  console.log("Product Detail is : " + prodInfo);
+
+  console.log("Reading Chaindata for getting Product info...");
+  prodInfo = await CPVContract.getProduct("k2d8xa");
+  console.log("Product Detail is : " + prodInfo);
 }
 
 main()

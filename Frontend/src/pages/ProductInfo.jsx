@@ -7,15 +7,21 @@ export default function ProductInfo() {
   const { slug } = useParams();
   console.log("Initial slug : " + slug);
 
-  function getFormatedDate(dateString) {
+  function getFormattedDate(dateString) {
+    if (!dateString) return "";
     const date = new Date(dateString);
     const string = `${date.getDay() < 10 ? "0" + date.getDay() : date.getDay()}-${
       date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth()
-    }-${date.getFullYear() < 10 ? "0" + date.getFullYear() : date.getFullYear()} | ${
-      date.getHours() < 10 ? "0" + date.getHours() : date.getHours()
-    }:${date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}:${
-      date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
-    } IST`;
+    }-${date.getFullYear() < 10 ? "0" + date.getFullYear() : date.getFullYear()}`;
+    return string;
+  }
+
+  function getFormattedTime(dateString) {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const string = `${date.getHours() < 10 ? "0" + date.getHours() : date.getHours()}:${
+      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
+    }:${date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()}`;
     return string;
   }
 
@@ -36,9 +42,9 @@ export default function ProductInfo() {
 
   return (
     // Product name, Brand Name, Product Id, Is Genuine
-    <div className="w-full h-96 flex align-middle justify-center">
-      <div className="text-3xl w-1/2 flex align-middle justify-center flex-col gap-5">
-        <div className="flex align-middle justify-center flex-col gap-3">
+    <div className="w-ful flex align-middle justify-center">
+      <div className=" text-center text-3xl w-1/2 flex align-middle justify-center flex-col gap-5">
+        <div className=" mt-64 flex align-middle justify-center flex-col gap-3">
           {console.log("Product : " + { ...product })}
           <span>
             Product Name:
@@ -54,11 +60,32 @@ export default function ProductInfo() {
           </span>
           <span>
             Registered At:
-            <span className=" font-bold"> {product && getFormatedDate(product[0]?.createdAt)}</span>
+            <span className=" font-bold ml-1">
+              {product &&
+                `${getFormattedDate(product[0]?.createdAt)} ${getFormattedTime(
+                  product[0]?.createdAt
+                )} IST`}
+            </span>
+          </span>
+          <span>
+            Manufacturing Date:
+            <span className=" font-bold ml-1">
+              {product && getFormattedDate(product[0]?.manufacturingDate)}
+            </span>
+          </span>
+          <span>
+            Expiray Date:
+            <span className=" font-bold ml-1">
+              {product && getFormattedDate(product[0]?.expiryDate)}
+            </span>
+          </span>
+          <span>
+            Product Description:
+            <span className=" font-bold ml-1">{product && product[0]?.description}</span>
           </span>
         </div>
         <div>
-          <h1>
+          <h1 className=" text-4xl">
             {product.isGenuine ? (
               <span className=" text-green-500">✅ Genuine Product</span>
             ) : (

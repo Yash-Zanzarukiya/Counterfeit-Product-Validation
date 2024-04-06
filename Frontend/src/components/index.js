@@ -7,8 +7,8 @@ import Input from "./Input";
 import Button from "./Button";
 import AuthLayout from "./AuthLayout";
 import Login from "./Login";
-import PostCard from "./PostCard";
-import PostForm from "./PostForm";
+import ProductRow from "./ProductRow";
+import ProductForm from "./ProductForm";
 import Signup from "./Signup";
 import GuestHome from "./GuestHome";
 
@@ -22,8 +22,8 @@ export {
   Input,
   Login,
   Logo,
-  PostCard,
-  PostForm,
+  ProductRow,
+  ProductForm,
   Signup,
   GuestHome,
 };

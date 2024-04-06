@@ -19,28 +19,22 @@ const userSchema = new Schema(
       lowercase: true,
       trim: true,
     },
+    password: {
+      type: String,
+      required: true,
+    },
     fullName: {
       type: String,
       required: true,
       trim: true,
       index: true,
     },
-    password: {
+    role: {
       type: String,
-      required: true,
     },
-    watchHistory: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Video",
-      },
-    ],
     avatar: {
       type: String,
       required: true,
-    },
-    coverImage: {
-      type: String,
     },
     refreshToken: {
       type: String,
