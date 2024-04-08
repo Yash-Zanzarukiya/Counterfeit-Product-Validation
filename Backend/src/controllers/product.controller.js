@@ -19,10 +19,14 @@ const addAProduct = asyncHandler(async (req, res) => {
     throw new APIError(400, "All fields required");
   }
 
-  // const photoLocalPath = req.file?.path;
-  // if (!photoLocalPath) throw new APIError(400, "Photo file required");
-  // const photo = await uploadPhotoOnCloudinary(photoLocalPath);
-  // if (!photo) throw new APIError(500, "Error Accured While uploading File");
+  const photoLocalPath = req.file?.path;
+  console.log(req.file);
+
+  if (!photoLocalPath) throw new APIError(400, "Photo file required");
+
+  const photo = await uploadPhotoOnCloudinary(photoLocalPath);
+
+  if (!photo) throw new APIError(500, "Error Accured While uploading File");
 
   const product = await Product.create({
     product_name,
@@ -53,6 +57,8 @@ const getProduct = asyncHandler(async (req, res) => {
   const product = await Product.find({ slug });
 
   if (!product) throw new APIError(400, "No product found");
+
+  // TODO : Call Smart contract Function
 
   const isGenuine = true;
 

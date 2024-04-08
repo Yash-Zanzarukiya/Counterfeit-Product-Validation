@@ -9,16 +9,16 @@ async function main() {
 
   //Registering the Product
   console.log("Sending Transaction for Registering Product...");
-  const txn = await CPVContract.registerProduct("vk18vk", "Wragon", "Virat Kohli");
+  const txn = await CPVContract.registerProduct("hrm08", "Levano", "Hariom Bhai");
   await txn.wait();
 
   // getting product info
   console.log("Reading Chaindata for getting Product info...");
-  let prodInfo = await CPVContract.getProduct("vk18vk");
+  let prodInfo = await CPVContract.getProduct("hrm08");
   console.log("Product Detail is : " + prodInfo);
 
   console.log("Reading Chaindata for getting Product info...");
-  prodInfo = await CPVContract.getProduct("k2d8xa");
+  prodInfo = await CPVContract.getProduct("vk18vk");
   console.log("Product Detail is : " + prodInfo);
 }
 

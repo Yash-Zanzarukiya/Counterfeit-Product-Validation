@@ -9,7 +9,9 @@ export class Service {
     productImage,
   }) {
     try {
+      // CHECK THIS
       const slug = product_id;
+      console.log(productImage)
       return await fetch("http://localhost:3000/api/v1/products/register-product", {
         method: "POST",
         body: JSON.stringify({
@@ -20,6 +22,7 @@ export class Service {
           description,
           manufacturingDate,
           expiryDate,
+          productImage
         }),
         headers: { "Content-Type": "application/json" },
       });
