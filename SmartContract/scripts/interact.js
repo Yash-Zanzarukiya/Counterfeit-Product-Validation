@@ -12,13 +12,8 @@ async function main() {
   const txn = await CPVContract.registerProduct("hrm08", "Levano", "Hariom Bhai");
   await txn.wait();
 
-  // getting product info
-  console.log("Reading Chaindata for getting Product info...");
-  let prodInfo = await CPVContract.getProduct("hrm08");
-  console.log("Product Detail is : " + prodInfo);
-
-  console.log("Reading Chaindata for getting Product info...");
-  prodInfo = await CPVContract.getProduct("vk18vk");
+  console.log("\nReading Chaindata for getting Product info...");
+  prodInfo = await CPVContract.getProduct("hrm08");
   console.log("Product Detail is : " + prodInfo);
 }
 

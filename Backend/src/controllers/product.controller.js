@@ -19,14 +19,11 @@ const addAProduct = asyncHandler(async (req, res) => {
     throw new APIError(400, "All fields required");
   }
 
-  const photoLocalPath = req.file?.path;
-  console.log(req.file);
-
-  if (!photoLocalPath) throw new APIError(400, "Photo file required");
-
-  const photo = await uploadPhotoOnCloudinary(photoLocalPath);
-
-  if (!photo) throw new APIError(500, "Error Accured While uploading File");
+  // const photoLocalPath = req.file?.path;
+  // console.log(req.file);
+  // if (!photoLocalPath) throw new APIError(400, "Photo file required");
+  // const photo = await uploadPhotoOnCloudinary(photoLocalPath);
+  // if (!photo) throw new APIError(500, "Error Accured While uploading File");
 
   const product = await Product.create({
     product_name,
