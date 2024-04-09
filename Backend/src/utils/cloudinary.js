@@ -14,7 +14,7 @@ const uploadPhotoOnCloudinary = async (localFilePath) => {
     //Uploading File to Cloudinary
     const cldnry_res = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
-      folder: "videotube/photos",
+      folder: "cpv",
     });
 
     // File Uploaded Successfully & Removing File From Local System
@@ -27,25 +27,6 @@ const uploadPhotoOnCloudinary = async (localFilePath) => {
   }
 };
 
-const uploadVideoOnCloudinary = async (localFilePath) => {
-  try {
-    if (!localFilePath) return null;
 
-    //Uploading File to Cloudinary
-    const cldnry_res = await cloudinary.uploader.upload(localFilePath, {
-      resource_type: "video",
-      folder: "videotube/videos",
-    });
 
-    // File Uploaded Successfully & Removing File From Local System
-    fs.unlinkSync(localFilePath);
-
-    return cldnry_res;
-  } catch (error) {
-    fs.unlinkSync(localFilePath); //Removing File From Local System
-    console.log("CLOUDINARY :: FILE UPLOAD ERROR ", error);
-    return null;
-  }
-};
-
-export { uploadPhotoOnCloudinary, uploadVideoOnCloudinary };
+export { uploadPhotoOnCloudinary};

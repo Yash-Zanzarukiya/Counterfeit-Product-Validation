@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PostCard } from "../components/index";
+import { ProductRow } from "../components/index";
 import backendService from "../appwrite/config";
 
 function AllProducts() {
@@ -26,7 +26,7 @@ function AllProducts() {
             <th className="border border-slate-400 text-center p-3">Brand Name</th>
             <th className="border border-slate-400 text-center p-3">View</th>
           </tr>
-          <tbody>{products && products.map((product) => <PostCard {...product} />)}</tbody>
+          <tbody>{products && products.map((product) => <ProductRow {...product} />)}</tbody>
         </table>
       </div>
     </div>

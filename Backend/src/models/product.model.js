@@ -15,6 +15,22 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+    },
+    productImage: {
+      type: String,
+    },
+    manufacturingDate: {
+      type: String,
+    },
+    expiryDate: {
+      type: String,
+    },
+    isSold: {
+      type: Boolean,
+      default: false,
+    },
     slug: {
       type: String,
       required: true,

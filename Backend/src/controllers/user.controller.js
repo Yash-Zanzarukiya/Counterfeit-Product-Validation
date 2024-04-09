@@ -55,16 +55,10 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // Handling File
-  // console.log(req.files);
 
   let avatarLocalPath = "";
   if (req.files && req.files.avatar && req.files?.avatar.length > 0) {
     avatarLocalPath = req.files?.avatar[0]?.path;
-  }
-
-  let coverImageLocalPath = "";
-  if (req.files && req.files.coverImage && req.files?.coverImage.length > 0) {
-    coverImageLocalPath = req.files?.coverImage[0]?.path;
   }
 
   if (!avatarLocalPath) {
@@ -77,17 +71,12 @@ const registerUser = asyncHandler(async (req, res) => {
   if (!avatarRes)
     throw new APIError(500, "Internal Server Error!!! Files Unable to Upload");
 
-  let coverImageRes = coverImageLocalPath
-    ? await uploadOnCloudinary(coverImageLocalPath)
-    : "";
-
   // Create new user
   const createdUser = await User.create({
     username: username.toLowerCase(),
     password,
     email,
     fullName,
-    coverImage: coverImageRes?.url || "",
     avatar: avatarRes.url,
   });
 
@@ -269,9 +258,6 @@ const getCurrentUser = asyncHandler(async (req, res) => {
     .status(200)
     .json(new APIResponse(201, req.user, "User fetched Successfully"));
 });
-
-
-
 
 export {
   registerUser,

@@ -1,14 +1,28 @@
 export class Service {
-  async addProduct({ product_name, brand_name, product_id }) {
+  async addProduct({
+    product_name,
+    brand_name,
+    product_id,
+    description,
+    manufacturingDate,
+    expiryDate,
+    productImage,
+  }) {
     try {
+      // CHECK THIS
       const slug = product_id;
+      console.log(productImage)
       return await fetch("http://localhost:3000/api/v1/products/register-product", {
         method: "POST",
         body: JSON.stringify({
           product_name,
+          slug,
           brand_name,
           product_id,
-          slug,
+          description,
+          manufacturingDate,
+          expiryDate,
+          productImage
         }),
         headers: { "Content-Type": "application/json" },
       });
