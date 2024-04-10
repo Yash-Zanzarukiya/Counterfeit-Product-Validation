@@ -61,15 +61,15 @@ const registerUser = asyncHandler(async (req, res) => {
     avatarLocalPath = req.files?.avatar[0]?.path;
   }
 
-  if (!avatarLocalPath) {
-    throw new APIError(400, "avatar Image is Required");
-  }
+  // if (!avatarLocalPath) {
+  //   throw new APIError(400, "avatar Image is Required");
+  // }
 
   // uploading on cloudinary
 
-  let avatarRes = await uploadOnCloudinary(avatarLocalPath);
-  if (!avatarRes)
-    throw new APIError(500, "Internal Server Error!!! Files Unable to Upload");
+  // let avatarRes = await uploadOnCloudinary(avatarLocalPath);
+  // if (!avatarRes)
+  //   throw new APIError(500, "Internal Server Error!!! Files Unable to Upload");
 
   // Create new user
   const createdUser = await User.create({
@@ -77,7 +77,7 @@ const registerUser = asyncHandler(async (req, res) => {
     password,
     email,
     fullName,
-    avatar: avatarRes.url,
+    // avatar: avatarRes.url,
   });
 
   // checking if user is created successfully
