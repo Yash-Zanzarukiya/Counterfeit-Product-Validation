@@ -1,4 +1,22 @@
 export class Service {
+  
+	async register({ email, password, username,fullName }) {
+		try {
+			return await fetch("http://localhost:3000/api/v1/users/register", {
+				method: "POST",
+				body: JSON.stringify({
+					username,
+					password,
+					fullName,
+					email,
+				}),
+				headers: { "Content-Type": "application/json" },
+			});
+		} catch (error) {
+			console.log("BACKEND_SERVICE :: CREATE_POST :: ERROR -> ", error);
+		}
+	}
+
   async addProduct({
     product_name,
     brand_name,
@@ -31,24 +49,28 @@ export class Service {
     }
   }
 
-  async getProduct(slug) {
-    try {
-      console.log("Requesting the post...");
-      return await fetch(`http://localhost:3000/api/v1/products/get-product/${slug}`);
-    } catch (error) {
-      console.log("BACKEND_SERVICE :: GET_POST :: ERROR -> ", error);
-      return false;
-    }
-  }
+	async getProduct(slug) {
+		try {
+			console.log("Requesting the post...");
+			return await fetch(
+				`http://localhost:3000/api/v1/products/get-product/${slug}`,
+			);
+		} catch (error) {
+			console.log("BACKEND_SERVICE :: GET_POST :: ERROR -> ", error);
+			return false;
+		}
+	}
 
-  async getAllProducts() {
-    try {
-      return await fetch("http://localhost:3000/api/v1/products/all-product");
-    } catch (error) {
-      console.log("BACKEND_SERVICE :: GET_ALL_POST :: ERROR -> ", error);
-      return false;
-    }
-  }
+	async getAllProducts() {
+		try {
+			return await fetch(
+				"http://localhost:3000/api/v1/products/all-product",
+			);
+		} catch (error) {
+			console.log("BACKEND_SERVICE :: GET_ALL_POST :: ERROR -> ", error);
+			return false;
+		}
+	}
 }
 
 const service = new Service();
