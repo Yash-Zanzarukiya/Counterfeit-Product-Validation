@@ -35,9 +35,8 @@ const registerUser = asyncHandler(async (req, res) => {
   // check if user created successfully
   // send back the response
 
-  // Getting the data from frontend
   let { username, password, fullName, email } = req.body;
-
+  console.log(username);
   // Validating and formating the data
   if (
     [username, password, fullName, email].some((field) => field?.trim() === "")
@@ -54,41 +53,32 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new APIError(400, "User Already Exists...");
   }
 
-  // Handling File
-  // console.log(req.files);
-
   let avatarLocalPath = "";
   if (req.files && req.files.avatar && req.files?.avatar.length > 0) {
     avatarLocalPath = req.files?.avatar[0]?.path;
   }
 
-  let coverImageLocalPath = "";
-  if (req.files && req.files.coverImage && req.files?.coverImage.length > 0) {
-    coverImageLocalPath = req.files?.coverImage[0]?.path;
-  }
 
-  if (!avatarLocalPath) {
-    throw new APIError(400, "avatar Image is Required");
-  }
+  // if (!avatarLocalPath) {
+  //   throw new APIError(400, "avatar Image is Required");
+  // }
 
   // uploading on cloudinary
 
-  let avatarRes = await uploadOnCloudinary(avatarLocalPath);
-  if (!avatarRes)
-    throw new APIError(500, "Internal Server Error!!! Files Unable to Upload");
+  // let avatarRes = await uploadOnCloudinary(avatarLocalPath);
+  // if (!avatarRes)
+  //   throw new APIError(500, "Internal Server Error!!! Files Unable to Upload");
 
-  let coverImageRes = coverImageLocalPath
-    ? await uploadOnCloudinary(coverImageLocalPath)
-    : "";
+  // let coverImageRes = coverImageLocalPath
+  //   ? await uploadOnCloudinary(coverImageLocalPath)
+  //   : "";
 
   // Create new user
   const createdUser = await User.create({
-    username: username.toLowerCase(),
+    username,
     password,
     email,
     fullName,
-    coverImage: coverImageRes?.url || "",
-    avatar: avatarRes.url,
   });
 
   // checking if user is created successfully
@@ -100,7 +90,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (!userData) {
     throw new APIError(500, "Something went wrong while registering the user");
   }
-
+  console.log(userData)
   // Send back data to frontend
   return res
     .status(201)
@@ -119,6 +109,7 @@ const loginUser = asyncHandler(async (req, res) => {
   // data <- req.body
 
   let { email, password, username } = req.body;
+  console.log("this is email and password in backend",email,password)
 
   // validate
   if (!email && !username) {
