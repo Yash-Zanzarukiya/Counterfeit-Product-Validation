@@ -23,7 +23,7 @@ function AllProducts() {
           <tr>
             <th className="border border-slate-400 text-center p-3">Product ID</th>
             <th className="border border-slate-400 text-center p-3">Product Name</th>
-            <th className="border border-slate-400 text-center p-3">Brand Name</th>
+            <th className="border border-slate-400 text-center p-3">Brand ID</th>
             <th className="border border-slate-400 text-center p-3">View</th>
           </tr>
           <tbody>{products && products.map((product) => <ProductRow {...product} />)}</tbody>

@@ -29,10 +29,27 @@ const userSchema = new Schema(
       trim: true,
       index: true,
     },
-    role: {
+    logo: {
       type: String,
     },
-    avatar: {
+    brandName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    licenceNumber: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    location: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    website: {
       type: String,
     },
     refreshToken: {

@@ -7,8 +7,9 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    brand_name: {
-      type: String,
+    brand: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     product_id: {
@@ -34,6 +35,9 @@ const productSchema = new Schema(
     slug: {
       type: String,
       required: true,
+    },
+    MRP: {
+      type: Number,
     },
   },
   {

@@ -8,115 +8,164 @@ import appwriteService from "../appwrite/config.js";
 import authService from "../appwrite/auth.js";
 
 function Signup() {
-	const [error, setError] = useState("");
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	const { register, handleSubmit } = useForm();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
 
-	const create = async (data) => {
-		setError("");
-		console.log("Inside create account call...");
-		// console.log(data)
-		let userData;
-		try {
-			await authService
-				.createAccount({ ...data })
-				.then((blob) => blob.json())
-				.then((res) => {
-					userData = res.success;
-					console.log(userData)
-				});
-			console.log(userData);
-			if (userData) {
-				const response  = await authService.getCurrentUser();
-				const currentData = await response.json();
-				if (currentData) {
-					dispatch(login(currentData));
-					navigate("/");
-				}
-			}
-		} catch (error) {
-			setError(error.message);
-		}
-	};
+  const create = async (data) => {
+    setError("");
+    let userData;
+    try {
+      await authService
+        .createAccount({ ...data })
+        .then((blob) => blob.json())
+        .then((res) => {
+          userData = res.success;
+        });
+      if (userData) {
+        const response = await authService.getCurrentUser();
+        const currentData = await response.json();
+        if (currentData) {
+          dispatch(login(currentData));
+          navigate("/");
+        }
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
-	return (
-		<div className="flex items-center justify-center">
-			{console.log("Inside Signup Component")}
-			<div
-				className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
-			>
-				<div className="mb-2 flex justify-center">
-					<span className="inline-block">
-						<Logo width="100%" />
-					</span>
-				</div>
+  return (
+    <div className="flex items-center justify-center">
+      <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+        <div className="mb-2 flex justify-center">
+          <span className="inline-block">
+            <Logo width="100%" />
+          </span>
+        </div>
 
-				<h2 className="text-center text-2xl font-bold leading-tight">
-					Sign up to create account
-				</h2>
+        <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
 
-				<p className="mt-2 text-center text-base text-black/60">
-					Already have an account?&nbsp;
-					<Link
-						to="/login"
-						className="font-medium text-primary transition-all duration-200 hover:underline"
-					>
-						Sign In
-					</Link>
-				</p>
+        <p className="mt-2 text-center text-base text-black/60">
+          Already have an account?&nbsp;
+          <Link
+            to="/login"
+            className="font-medium text-primary transition-all duration-200 hover:underline"
+          >
+            Sign In
+          </Link>
+        </p>
 
-				{error && (
-					<p className="text-red-600 mt-8 text-center">{error}</p>
-				)}
+        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
-				<form onSubmit={handleSubmit(create)}>
-					<div className="space-y-5">
-						<Input
-							label="Full Name: "
-							placeholder="Enter your full name"
-							{...register("fullName", {
-								required: true,
-							})}
-						/>
-						<Input
-							label="Username: "
-							placeholder="Enter your username"
-							{...register("username", {
-								required: true,
-							})}
-						/>
-						<Input
-							label="Email: "
-							placeholder="Enter your email"
-							type="email"
-							{...register("email", {
-								required: true,
-								validate: {
-									matchPatern: (value) =>
-										/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
-											value,
-										) ||
-										"Email address must be a valid address",
-								},
-							})}
-						/>
-						<Input
-							label="Password: "
-							type="password"
-							placeholder="Enter your password"
-							{...register("password", {
-								required: true,
-							})}
-						/>
-						<Button type="submit" className="w-full">
-							Create Account
-						</Button>
-					</div>
-				</form>
-			</div>
-		</div>
-	);
+        <form onSubmit={handleSubmit(create)}>
+          <div className="space-y-5">
+            <Input
+              label="Owner Name: "
+              required
+              placeholder="Enter Owner Name"
+              {...register("fullName", {
+                required: "please enter owner name",
+              })}
+            />
+            <Input
+              label="Username: "
+              required
+              placeholder="Enter your username"
+              {...register("username", {
+                required: "please enter the username",
+              })}
+            />
+            <Input
+              label="Email: "
+              placeholder="Enter your email"
+              type="email"
+              required
+              {...register("email", {
+                required: "please enter the email",
+                validate: {
+                  matchPatern: (value) =>
+                    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                    "Email address must be a valid address",
+                },
+              })}
+            />
+            <Input
+              label="Password: "
+              type="password"
+              required
+              placeholder="Enter your password"
+              {...register("password", {
+                required: "please enter the password",
+              })}
+            />
+            <Input
+              label="Brand Name: "
+              type="text"
+              required
+              placeholder="Enter your Brand Name"
+              {...register("brandName", {
+                required: ["please enter your brand name!!!"],
+              })}
+            />
+            <Input
+              label="Licence Number: "
+              type="text"
+              required
+              placeholder="Enter your Brand Licence Number"
+              {...register("licenceNumber", {
+                required: "please enter your brand's licence number!!!",
+              })}
+            />
+            <Input
+              label="Address: "
+              type="text"
+              required
+              placeholder="Enter your Brand's Licence Number"
+              {...register("address", {
+                required: "please enter your brand's address!!!",
+              })}
+            />
+            <Input
+              label="Location: "
+              type="text"
+              required
+              placeholder="Enter your Brand's location"
+              {...register("location", {
+                required: "please enter your brand's location!!!",
+              })}
+            />
+            <Input
+              label="description: "
+              type="text"
+              required
+              placeholder="Give some brief description about your brand"
+              {...register("description", {
+                required: "please enter some description",
+              })}
+            />
+            <Input
+              label="website: "
+              type="text"
+              placeholder="Enter your brand's Official website"
+              {...register("website", { required: false })}
+            />
+            <Input
+              label="Brand Logo :"
+              type="file"
+              className="mb-4"
+              accept="image/png, image/jpg, image/jpeg, image/gif"
+              {...register("logo", { required: false })}
+            />
+            <Button type="submit" className="w-full">
+              Create Account
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default Signup;

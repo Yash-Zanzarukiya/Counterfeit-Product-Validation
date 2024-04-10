@@ -44,19 +44,25 @@ export default function ProductInfo() {
     // Product name, Brand Name, Product Id, Is Genuine
     <div className="w-ful flex align-middle justify-center">
       <div className=" text-center text-3xl w-1/2 flex align-middle justify-center flex-col gap-5">
-        <div className=" mt-64 flex align-middle justify-center flex-col gap-3">
-          {console.log("Product : " + { ...product })}
+        <div className=" mt-36 flex align-middle justify-center flex-col gap-3">
+          <span className="flex align-middle justify-center">
+            <img className=" font-bold h-36 rounded" src={product && product[0]?.productImage} />
+          </span>
           <span>
             Product Name:
             <span className=" font-bold"> {product && product[0]?.product_name}</span>
           </span>
           <span>
             Brand Name:
-            <span className=" font-bold"> {product && product[0]?.brand_name}</span>
+            <span className=" font-bold"> {product && product[0]?.brand}</span>
           </span>
           <span>
             Product ID:
             <span className=" font-bold"> {product && product[0]?.product_id}</span>
+          </span>
+          <span>
+            MRP:
+            <span className=" font-bold"> {product && product[0]?.MRP}</span>
           </span>
           <span>
             Registered At:

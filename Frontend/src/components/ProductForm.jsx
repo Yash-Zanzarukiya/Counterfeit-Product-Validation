@@ -61,11 +61,11 @@ export default function ProductForm({ product }) {
               {...register("product_id", { required: true })}
             />
             <Input
-              label="Brand Name :"
-              placeholder="Brand Name"
+              label="MRP :"
+              placeholder="Enter MRP"
               className="mb-4"
               required
-              {...register("brand_name", { required: true })}
+              {...register("MRP", { required: true })}
             />
             <Input
               label="Description :"
@@ -91,7 +91,7 @@ export default function ProductForm({ product }) {
               label="Product Image :"
               type="file"
               className="mb-4"
-              accept="image/png, image/jpg, image/jpeg, image/gif"
+              // accept="image/png, image/jpg, image/jpeg, image/gif"
               {...register("productImage", { required: false })}
             />
             <Button type="submit" bgColor={product ? "bg-green-500" : undefined} className="w-1/3">

@@ -1,4 +1,4 @@
-import { Container } from "../components/index";
+import { Container, Dashboard } from "../components/index";
 import { useSelector } from "react-redux";
 import { GuestHome } from "../components/index";
 
@@ -15,11 +15,9 @@ function Home() {
     );
   }
   return (
-    <div className="w-full py-8 ">
-      <div className=" min-h-full flex flex-wrap items-center justify-center">
-        <h1 className="text-4xl">Welcome Hariom!!!</h1>
-      </div>
-    </div>
+    <Container>
+      <Dashboard/>
+    </Container>
   );
 }
 

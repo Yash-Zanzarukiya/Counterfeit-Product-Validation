@@ -26,25 +26,36 @@ const generateAccessAndRefreshToken = async (_id) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-  // Get the data from frontend
-  // Validate the data - Check if empty or not
-  // check if user exists or not
-  // Handle file uploads
-  // upload files in cloudinary
-  // create user
-  // check if user created successfully
-  // send back the response
+  let {
+    username,
+    password,
+    fullName,
+    email,
+    brandName,
+    licenceNumber,
+    address,
+    location,
+    description,
+    website,
+  } = req.body;
 
-  let { username, password, fullName, email } = req.body;
-  console.log(username);
-  // Validating and formating the data
+
   if (
-    [username, password, fullName, email].some((field) => field?.trim() === "")
+    [
+      username,
+      password,
+      fullName,
+      email,
+      brandName,
+      licenceNumber,
+      address,
+      location,
+      description,
+    ].some((field) => field?.trim() === "")
   ) {
     throw new APIError(400, `all fields are required!!!`);
   }
 
-  // checking if user exists or not
   const userExist = await User.findOne({
     $or: [{ username }, { email }],
   });
@@ -53,27 +64,31 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new APIError(400, "User Already Exists...");
   }
 
-  let avatarLocalPath = "";
-  if (req.files && req.files.avatar && req.files?.avatar.length > 0) {
-    avatarLocalPath = req.files?.avatar[0]?.path;
+  let logo = "";
+  if (req.file && req.file?.path) {
+    let logoLocalPath = req.file?.path;
+    logo = await uploadOnCloudinary(logoLocalPath);
+    if (!logo)
+      throw new APIError(
+        500,
+        "Internal Server Error!!! logo File Unable to Upload"
+      );
+    logo = logo.url;
   }
-  // if (!avatarLocalPath) {
-  //   throw new APIError(400, "avatar Image is Required");
-  // }
-
-  // uploading on cloudinary
-
-  // let avatarRes = await uploadOnCloudinary(avatarLocalPath);
-  // if (!avatarRes)
-  //   throw new APIError(500, "Internal Server Error!!! Files Unable to Upload");
 
   // Create new user
   const createdUser = await User.create({
     username,
     password,
-    email,
     fullName,
-    // avatar: avatarRes.url,
+    email,
+    brandName,
+    licenceNumber,
+    address,
+    location,
+    description,
+    website,
+    logo,
   });
 
   // checking if user is created successfully
@@ -85,7 +100,6 @@ const registerUser = asyncHandler(async (req, res) => {
   if (!userData) {
     throw new APIError(500, "Something went wrong while registering the user");
   }
-  console.log(userData)
   // Send back data to frontend
   return res
     .status(201)
@@ -93,18 +107,7 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  // data <- req.body
-  // validate data
-  // find User
-  // generate tokens
-  // store tokens in database
-  // set tokens in cookie
-  // send response
-
-  // data <- req.body
-
   let { email, password, username } = req.body;
-  console.log("this is email and password in backend",email,password)
 
   // validate
   if (!email && !username) {
@@ -139,6 +142,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const cookieOptions = {
     httpOnly: true,
     secure: true,
+    sameSite: "None",
   };
 
   return res

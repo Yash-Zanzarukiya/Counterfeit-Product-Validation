@@ -11,6 +11,7 @@ import ProductRow from "./ProductRow";
 import ProductForm from "./ProductForm";
 import Signup from "./Signup";
 import GuestHome from "./GuestHome";
+import Dashboard from "./Dashboard";
 
 export {
   Container,
@@ -26,4 +27,5 @@ export {
   ProductForm,
   Signup,
   GuestHome,
+  Dashboard
 };

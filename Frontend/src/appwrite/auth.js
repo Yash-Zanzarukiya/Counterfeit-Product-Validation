@@ -1,79 +1,77 @@
 export class AuthService {
-	async createAccount({ email, password, fullName, username }) {
-		try {
-			let userAccount;
+  async createAccount({ ...data }) {
+    try {
+      let userAccount;
 
-			await fetch("http://localhost:3000/api/v1/users/register", {
-				method: "POST",
-				body: JSON.stringify({
-					username,
-					password,
-					fullName,
-					email,
-				}),
-				headers: { "Content-Type": "application/json" },
-			})
-				.then((blob) => blob.json())
-				.then((res) => {
-					userAccount = res.success;
-				});
-			if (userAccount) {
-				return this.login({ email, password });
-			} else {
-				return userAccount;
-			}
-		} catch (error) {
-			console.log(
-				"APPWRITE_SERVICE :: CREATE_ACCOUNT :: ERROR -> ",
-				error,
-			);
-			throw error;
-		}
-	}
+      const formData = new FormData();
 
-	async login({ email, password }) {
-		try {
-			return await fetch("http://localhost:3000/api/v1/users/login", {
-				method: "POST",
-				body: JSON.stringify({
-					password,
-					email,
-				}),
-				headers: { "Content-Type": "application/json" },
-			});
-		} catch (error) {
-			console.log("APPWRITE_SERVICE :: LOGIN :: ERROR -> ", error);
-			throw error;
-		}
-	}
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+      if (data.logo) {
+        formData.append("logo", data.logo[0]);
+      }
 
-	async getCurrentUser() {
-		try {
-			return await fetch(
-				"http://localhost:3000/api/v1/users/get-current-user",
-			);
-		} catch (error) {
-			console.log(
-				"APPWRITE_SERVICE :: GET_CURRENT_USER :: ERROR -> ",
-				error,
-			);
-			throw error;
-		}
-		return null;
-	}
+      await fetch("/api/v1/users/register", {
+        method: "POST",
+        body: formData,
+      })
+        .then((blob) => blob.json())
+        .then((res) => {
+          userAccount = res.success;
 
-	async logout() {
-		try {
-			return await fetch("http://localhost:3000/api/v1/users/logout", {
-				method: "POST",
-				body: JSON.stringify({}),
-				headers: { "Content-Type": "application/json" },
-			});
-		} catch (error) {
-			console.log("APPWRITE_SERVICE :: LOGOUT :: ERROR -> ", error);
-			throw error;
-		}
-	}
+        });
+      if (userAccount) {
+        return this.login({ email:data.email, password: data.password });
+      } else {
+        return userAccount;
+      }
+    } catch (error) {
+      console.log("BACKEND_SERVICE :: CREATE_ACCOUNT :: ERROR -> ", error);
+      throw error;
+    }
+  }
+
+  async login({ email, password }) {
+    try {
+
+      return await fetch("/api/v1/users/login", {
+        method: "POST",
+        body: JSON.stringify({
+          password,
+          email,
+        }),
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.log("BACKEND_SERVICE :: LOGIN :: ERROR -> ", error);
+      throw error;
+    }
+  }
+
+  async getCurrentUser() {
+    try {
+      return await fetch("api/v1/users/get-current-user");
+    } catch (error) {
+      console.log("BACKEND_SERVICE :: GET_CURRENT_USER :: ERROR -> ", error);
+      throw error;
+    }
+    return null;
+  }
+
+  async logout() {
+    try {
+      return await fetch("/api/v1/users/logout", {
+        method: "POST",
+        body: JSON.stringify({}),
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      console.log("BACKEND_SERVICE :: LOGOUT :: ERROR -> ", error);
+      throw error;
+    }
+  }
 }
 
 const authService = new AuthService();
