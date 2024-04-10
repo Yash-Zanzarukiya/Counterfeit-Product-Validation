@@ -69,7 +69,6 @@ const router = createBrowserRouter([
         path: "/product/:slug",
         element: (
           // <AuthLayout authentication={true}>
-            // {" "}
             <ProductInfo />
           // {/* </AuthLayout> */}
         ),

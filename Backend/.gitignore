@@ -59,7 +59,6 @@ web_modules/
 .env.production.local
 .env.local
 
-.prettierrc
 
 
 # parcel-bundler cache (https://parceljs.org/)
