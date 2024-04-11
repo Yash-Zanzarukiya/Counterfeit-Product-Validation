@@ -5,7 +5,6 @@ import { Product } from "../models/product.model.js";
 import { uploadPhotoOnCloudinary } from "../utils/cloudinary.js";
 
 const addAProduct = asyncHandler(async (req, res) => {
-
   const {
     product_name,
     product_id,
@@ -13,7 +12,7 @@ const addAProduct = asyncHandler(async (req, res) => {
     description,
     manufacturingDate,
     expiryDate,
-    MRP
+    MRP,
   } = req.body;
 
   const brand = req.user?._id;
@@ -24,21 +23,23 @@ const addAProduct = asyncHandler(async (req, res) => {
 
   const photoLocalPath = req.file?.path;
 
-  if (!photoLocalPath) throw new APIError(400, "Photo file required");
-
-  const photo = await uploadPhotoOnCloudinary(photoLocalPath);
-  if (!photo) throw new APIError(500, "Error Accured While uploading File");
+  let productImage = "";
+  if (photoLocalPath) {
+    let photo = await uploadPhotoOnCloudinary(photoLocalPath);
+    if (!photo) throw new APIError(500, "Error Accured While uploading File");
+    productImage = photo.url;
+  }
 
   const product = await Product.create({
     product_name,
     brand,
     product_id,
     slug,
-    productImage: photo.url,
+    productImage,
     description,
     manufacturingDate,
     expiryDate,
-    MRP
+    MRP,
   });
 
   if (!product) {
@@ -77,7 +78,6 @@ const getProduct = asyncHandler(async (req, res) => {
 });
 
 const getAllProducts = asyncHandler(async (req, res) => {
-
   //TODO: find only logged in Brand's product after Indiviadual login.
 
   const products = await Product.find({});

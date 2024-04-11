@@ -1,38 +1,66 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Input } from "./index";
-import appwriteService from "../appwrite/config";
+import backendService from "../backend/config";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { registerProduct } from "../backend/contract";
+import { useSelector, useDispatch } from "react-redux";
+import authService from "../backend/auth";
+import { login, logout } from "../app/authSlice";
 
 export default function ProductForm({ product }) {
   const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
     defaultValues: {
       product_name: product?.product_name || "",
-      brand_name: product?.brand_name || "",
+      MRP: product?.MRP || "",
       product_id: product?.product_id || "",
     },
   });
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    authService
+      .getCurrentUser()
+      .then((blob) => blob.json())
+      .then((userData) => {
+        if (userData) {
+          dispatch(login(userData.data));
+        } else {
+          dispatch(logout());
+        }
+      });
+  }, []);
+
+  const userdata = useSelector((state) => state.auth.userData);
+  const brand_id = userdata?._id;
+
   const navigate = useNavigate();
-  const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
     let dbProduct;
-    await appwriteService
-      .addProduct({ ...data })
-      .then((blob) => {
-        console.log(blob);
-        return blob?.json();
-      })
-      .then((res) => {
-        dbProduct = res?.data;
-      })
-      .catch((err) => console.log("ProductForm :: Error accured while adding Product :: ", err));
+    await registerProduct(data.product_id, data.product_name, brand_id).then((res) => {
+      const regProduct = async () => {
+        await backendService
+          .addProduct({ ...data })
+          .then((blob) => {
+            return blob?.json();
+          })
+          .then((res) => {
+            if (res.success) {
+              dbProduct = res?.data;
+            }
+          })
+          .catch((err) =>
+            console.log("ProductForm :: Error accured while adding Product :: ", err)
+          );
 
-    if (dbProduct) {
-      navigate(`/qrcode/${dbProduct.product_id}`);
-    }
+        if (dbProduct) {
+          navigate(`/qrcode/${dbProduct.product_id}`);
+        }
+      };
+      regProduct();
+    });
   };
 
   return (
@@ -82,7 +110,7 @@ export default function ProductForm({ product }) {
             />
             <Input
               type="date"
-              label="Expiry Date :"
+              label="Expiry Date (if applicable) :"
               placeholder="Expiry Date"
               className="mb-4"
               {...register("expiryDate", { required: false })}

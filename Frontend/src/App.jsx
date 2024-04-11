@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import authService from "./appwrite/auth";
+import authService from "./backend/auth";
 import { login, logout } from "./app/authSlice";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
@@ -13,9 +13,10 @@ function App() {
   useEffect(() => {
     authService
       .getCurrentUser()
-      .then((userData) => {
-        if (userData) {
-          dispatch(login({ userData }));
+      .then((blob) => blob.json())
+      .then((res) => {
+        if (res.success) {
+          dispatch(login(res.data?.user));
         } else {
           dispatch(logout());
         }

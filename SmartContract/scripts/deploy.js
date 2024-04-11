@@ -5,6 +5,7 @@ async function main() {
   const txHash = cpvContract.deployTransaction.hash;
   const txReceipt = await ethers.provider.waitForTransaction(txHash);
   console.log("Contract deployed to address:", txReceipt.contractAddress);
+  console.log(txReceipt);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

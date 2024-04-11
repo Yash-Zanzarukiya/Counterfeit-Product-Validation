@@ -1,5 +1,6 @@
 import React from "react";
 import digital from "../assets/Img/digital.png";
+import { Link } from "react-router-dom";
 
 const GuestHome = () => {
   return (
@@ -23,11 +24,11 @@ const GuestHome = () => {
                 </div>
 
                 <div className="flex justify-center mt-19">
-                  {" "}
-                  {/* Centering the button */}
-                  <button className="bg-blue-900 p-3 text-white rounded-xl  hover:bg-blue-500">
-                    Scan QR
-                  </button>
+                  <Link to={"/scan"}>
+                    <button className="bg-blue-900 p-3 text-white rounded-xl  hover:bg-blue-500">
+                      Scan QR
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="w-1/2 flex justify-center">

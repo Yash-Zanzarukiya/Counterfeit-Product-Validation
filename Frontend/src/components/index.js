@@ -12,6 +12,8 @@ import ProductForm from "./ProductForm";
 import Signup from "./Signup";
 import GuestHome from "./GuestHome";
 import Dashboard from "./Dashboard";
+import FakeProduct from "./FackProduct";
+import QRScanner from "./QRScanner";
 
 export {
   Container,
@@ -27,5 +29,7 @@ export {
   ProductForm,
   Signup,
   GuestHome,
-  Dashboard
+  Dashboard,
+  FakeProduct,
+  QRScanner,
 };

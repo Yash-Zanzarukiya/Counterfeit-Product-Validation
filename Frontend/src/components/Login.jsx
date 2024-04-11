@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { login as authLogin } from "../app/authSlice";
 import { Input, Button, Logo } from "./index";
 import { useDispatch } from "react-redux";
-import authService from "../appwrite/auth";
+import authService from "../backend/auth";
 import { useForm } from "react-hook-form";
 
 function Login() {
@@ -21,7 +21,6 @@ function Login() {
         .then((blob) => blob.json())
         .then((res) => {
           userData1 = res.data?.user;
-          console.log("res.data: ",res.data.user);
         });
 
       if (userData1) {

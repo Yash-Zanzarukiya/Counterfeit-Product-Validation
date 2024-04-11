@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { Input, Button, Logo } from "./index";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import appwriteService from "../appwrite/config.js";
-import authService from "../appwrite/auth.js";
+import backendService from "../backend/config.js";
+import authService from "../backend/auth.js";
 
 function Signup() {
   const [error, setError] = useState("");
@@ -37,8 +37,8 @@ function Signup() {
   };
 
   return (
-    <div className="flex items-center justify-center">
-      <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+    <div className="w-full flex items-center justify-center">
+      <div className={`w-1/3 bg-gray-100 rounded-xl p-10 border border-black/10`}>
         <div className="mb-2 flex justify-center">
           <span className="inline-block">
             <Logo width="100%" />
@@ -72,14 +72,14 @@ function Signup() {
             <Input
               label="Username: "
               required
-              placeholder="Enter your username"
+              placeholder="Choose Your username"
               {...register("username", {
                 required: "please enter the username",
               })}
             />
             <Input
               label="Email: "
-              placeholder="Enter your email"
+              placeholder="Enter Your email"
               type="email"
               required
               {...register("email", {
@@ -95,7 +95,7 @@ function Signup() {
               label="Password: "
               type="password"
               required
-              placeholder="Enter your password"
+              placeholder="Create New Password"
               {...register("password", {
                 required: "please enter the password",
               })}
@@ -104,7 +104,7 @@ function Signup() {
               label="Brand Name: "
               type="text"
               required
-              placeholder="Enter your Brand Name"
+              placeholder="Enter Your Brand Name"
               {...register("brandName", {
                 required: ["please enter your brand name!!!"],
               })}
@@ -113,7 +113,7 @@ function Signup() {
               label="Licence Number: "
               type="text"
               required
-              placeholder="Enter your Brand Licence Number"
+              placeholder="Enter Your Brand's Licence Number"
               {...register("licenceNumber", {
                 required: "please enter your brand's licence number!!!",
               })}
@@ -122,7 +122,7 @@ function Signup() {
               label="Address: "
               type="text"
               required
-              placeholder="Enter your Brand's Licence Number"
+              placeholder="Enter Your Brand's Address"
               {...register("address", {
                 required: "please enter your brand's address!!!",
               })}
@@ -131,7 +131,7 @@ function Signup() {
               label="Location: "
               type="text"
               required
-              placeholder="Enter your Brand's location"
+              placeholder="Enter Your Brand's location"
               {...register("location", {
                 required: "please enter your brand's location!!!",
               })}
@@ -140,7 +140,7 @@ function Signup() {
               label="description: "
               type="text"
               required
-              placeholder="Give some brief description about your brand"
+              placeholder="Give Some Brief Description About Your Brand"
               {...register("description", {
                 required: "please enter some description",
               })}
@@ -148,7 +148,7 @@ function Signup() {
             <Input
               label="website: "
               type="text"
-              placeholder="Enter your brand's Official website"
+              placeholder="Enter Your Brand's Official Website"
               {...register("website", { required: false })}
             />
             <Input

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import backendService from "../appwrite/auth";
+import backendService from "../backend/auth";
 import { useLocation } from "react-router-dom";
+import { ethers } from "ethers";
 
 export default function Dashboard() {
   let location = useLocation();
@@ -29,19 +29,20 @@ export default function Dashboard() {
               <span className="flex align-middle justify-center">
                 <img className=" font-bold h-36 rounded" src={user && user.logo} />
               </span>
-              <span> email: <span className=" font-bold">{user && user?.email}</span>
+              <span>
+                Owner Name:
+                <span className=" font-bold"> {user && user?.fullName}</span>
               </span>
               <span>
                 username:
                 <span className=" font-bold"> {user && user?.username}</span>
               </span>
               <span>
-                Owner Name:
-                <span className=" font-bold"> {user && user?.fullName}</span>
-              </span>
-              <span>
                 brandName:
                 <span className=" font-bold"> {user && user?.brandName}</span>
+              </span>
+              <span>
+                email: <span className=" font-bold">{user && user?.email}</span>
               </span>
               <span>
                 licenceNumber:

@@ -1,6 +1,7 @@
 import { Container, Dashboard } from "../components/index";
 import { useSelector } from "react-redux";
 import { GuestHome } from "../components/index";
+import AuthLayout from "../components/AuthLayout";
 
 function Home() {
   const authStatus = useSelector((state) => state.auth.status);
@@ -16,7 +17,9 @@ function Home() {
   }
   return (
     <Container>
-      <Dashboard/>
+      <AuthLayout authentication>
+        <Dashboard />
+      </AuthLayout>
     </Container>
   );
 }

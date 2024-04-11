@@ -1,17 +1,41 @@
 import { useEffect, useState } from "react";
-import endPointService from "../appwrite/config";
+import endPointService from "../backend/config";
 import { useParams } from "react-router-dom";
+import { FakeProduct } from "../components";
+import { getProduct } from "../backend/contract";
 
 export default function ProductInfo() {
   const [product, setProduct] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const { slug } = useParams();
-  console.log("Initial slug : " + slug);
+
+  useEffect(() => {
+    const getProductInfo = async () => {
+      await getProduct(slug).then((data) => {
+        if (data[0]) {
+          const getFromDB = async () => {
+            await endPointService
+              .getProduct(slug)
+              .then((blob) => blob.json())
+              .then(async (res) => {
+                if (res.success) {
+                  setProduct(res.data);
+                  setIsLoading(false);
+                }
+              });
+          };
+          getFromDB();
+        } else setIsLoading(false);
+      });
+    };
+    getProductInfo();
+  }, [slug]);
 
   function getFormattedDate(dateString) {
     if (!dateString) return "";
     const date = new Date(dateString);
     const string = `${date.getDay() < 10 ? "0" + date.getDay() : date.getDay()}-${
-      date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth()
+      date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
     }-${date.getFullYear() < 10 ? "0" + date.getFullYear() : date.getFullYear()}`;
     return string;
   }
@@ -25,23 +49,12 @@ export default function ProductInfo() {
     return string;
   }
 
-  useEffect(() => {
-    const getProduct = async () => {
-      console.log("In function slug : " + slug);
-      await endPointService
-        .getProduct(slug)
-        .then((blob) => blob.json())
-        .then((res) => {
-          console.log("Res.data : ");
-          console.log(res);
-          setProduct(res.data);
-        });
-    };
-    getProduct();
-  }, [slug]);
+  if (isLoading)
+    return (
+      <div className=" w-full h-screen text-center text-4xl">Verifying Product Authenticity...</div>
+    );
 
-  return (
-    // Product name, Brand Name, Product Id, Is Genuine
+  return product && product.isGenuine ? (
     <div className="w-ful flex align-middle justify-center">
       <div className=" text-center text-3xl w-1/2 flex align-middle justify-center flex-col gap-5">
         <div className=" mt-36 flex align-middle justify-center flex-col gap-3">
@@ -53,7 +66,7 @@ export default function ProductInfo() {
             <span className=" font-bold"> {product && product[0]?.product_name}</span>
           </span>
           <span>
-            Brand Name:
+            Brand ID:
             <span className=" font-bold"> {product && product[0]?.brand}</span>
           </span>
           <span>
@@ -92,14 +105,12 @@ export default function ProductInfo() {
         </div>
         <div>
           <h1 className=" text-4xl">
-            {product.isGenuine ? (
-              <span className=" text-green-500">✅ Genuine Product</span>
-            ) : (
-              <span className=" text-red-600">❌ Product is not Genuine</span>
-            )}
+            <span className=" text-green-500">Genuine Product</span>
           </h1>
         </div>
       </div>
     </div>
+  ) : (
+    <FakeProduct />
   );
 }

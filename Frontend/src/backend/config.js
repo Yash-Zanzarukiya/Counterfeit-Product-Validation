@@ -22,7 +22,6 @@ export class Service {
 
   async getProduct(slug) {
     try {
-      console.log("Requesting the post...");
       return await fetch(`/api/v1/products/get-product/${slug}`);
     } catch (error) {
       console.log("BACKEND_SERVICE :: GET_POST :: ERROR -> ", error);

@@ -14,6 +14,8 @@ import QrCode from "./pages/QrCode.jsx";
 import AllProducts from "./pages/AllProduct";
 import Login from "./pages/Login.jsx";
 import ProductInfo from "./pages/ProductInfo.jsx";
+import QrCodeScanner from "./pages/QrCodeScanner.jsx";
+import { FakeProduct } from "./components/index.js";
 
 const router = createBrowserRouter([
   {
@@ -60,19 +62,26 @@ const router = createBrowserRouter([
         path: "/qrcode/:slug",
         element: (
           <AuthLayout authentication>
-            {" "}
             <QrCode />
           </AuthLayout>
         ),
       },
       {
-        path: "/product/:slug",
+        path: "/scan",
         element: (
-          // <AuthLayout authentication={true}>
-            <ProductInfo />
-          // {/* </AuthLayout> */}
+          <AuthLayout authentication={false}>
+            <QrCodeScanner />
+          </AuthLayout>
         ),
       },
+      {
+        path: "/product/:slug",
+        element: <ProductInfo />,
+      },
+      {
+        path: "/fake-product",
+        element: <FakeProduct />,
+      }
     ],
   },
 ]);
