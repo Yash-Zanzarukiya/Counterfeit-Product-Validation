@@ -8,19 +8,15 @@ function Home() {
 
   if (!authStatus) {
     return (
-      <div className="w-full py-8 mt-4 text-center">
-        <Container>
-          <GuestHome />
-        </Container>
-      </div>
+      <main className="bg-[#00172F]">
+        <GuestHome />;
+      </main>
     );
   }
   return (
-    <Container>
-      <AuthLayout authentication>
-        <Dashboard />
-      </AuthLayout>
-    </Container>
+    <AuthLayout authentication>
+      <Dashboard />
+    </AuthLayout>
   );
 }
 

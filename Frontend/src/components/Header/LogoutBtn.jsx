@@ -16,7 +16,7 @@ function LogoutBtn() {
 
   return (
     <button
-      className="inline-bock px-6 py-2 duration-200 hover:bg-red-400 rounded-full"
+      className=" hover:scale-110 text-[#f94747] transition-all ease-in-out uppercase"
       onClick={logoutHandler}
     >
       Logout

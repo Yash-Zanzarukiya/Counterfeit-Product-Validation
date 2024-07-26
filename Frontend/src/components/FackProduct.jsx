@@ -8,7 +8,7 @@ const FakeProduct = () => {
   };
 
   return (
-    <div className="w-full bg-cover bg-no-repeat overflow-y-scroll h-[80vh] bg-fake-product-bg ">
+    <div className="w-full min-h-screen flex justify-center items-center bg-cover bg-no-repeat overflow-y-scroll h-[80vh] bg-fake-product-bg ">
       <div className="w-[45%] mx-auto mt-10 mb-10 p-10 bg-white rounded shadow-md">
         <h1 className="text-center text-4xl text-red-600 font-bold font-monttserrat mb-5 mt-5">
           Product Authentication Failed

@@ -62,8 +62,6 @@ const getProduct = asyncHandler(async (req, res) => {
 
   if (!product) throw new APIError(400, "No product found");
 
-  // TODO : Call Smart contract Function
-
   const isGenuine = true;
 
   return res
@@ -78,11 +76,11 @@ const getProduct = asyncHandler(async (req, res) => {
 });
 
 const getAllProducts = asyncHandler(async (req, res) => {
-  //TODO: find only logged in Brand's product after Indiviadual login.
+  //TODO: find only logged in Brand's product after Individual login.
 
-  const products = await Product.find({});
+  const products = await Product.find({ brand: req.user?._id });
 
-  if (!products) throw new APIError(400, "No Product found");
+  // if (!products) throw new APIError(400, "No Product found");
 
   return res
     .status(200)

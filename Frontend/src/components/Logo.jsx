@@ -1,9 +1,9 @@
-function Logo({ width = "w-20" }) {
+function Logo({ width = "40", height = "40", size = "40" }) {
   return (
-    <div className=" w-fit h-fit ml-2 mt-1">
+    <div className="flex w-fit h-fit ml-2 mt-1">
       <svg
-        width="30"
-        height="30"
+        width={size}
+        height={size}
         viewBox="0 0 50 56"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
