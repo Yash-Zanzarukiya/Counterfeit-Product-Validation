@@ -25,10 +25,10 @@ function App() {
   }, []);
 
   return !loading ? (
-    <div className="min-h-screen w-full flex flex-wrap content-between bg-gray-800 bg-gradient-to-br from-gray-600 to-pink-900">
-      <div className="w-full block">
+    <div className="min-h-screen w-full flex flex-wrap content-between ">
+      <div className="w-full block font-Cuprum h-full">
         <Header />
-        <main>
+        <main className=" w-full overflow-hidden scroll-smooth bg-gradient-to-r from-[#5f78d4] to-[#3657cd]">
           <Outlet />
         </main>
       </div>

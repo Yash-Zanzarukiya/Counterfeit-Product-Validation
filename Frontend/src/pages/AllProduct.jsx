@@ -12,21 +12,31 @@ function AllProducts() {
       .then((products) => {
         if (products) {
           setProducts(products.data);
+          console.log("products.data: ", products.data);
         }
       });
   }, []);
 
   return (
-    <div className="w-full py-8">
+    <div className="w-full min-h-screen mt-12 py-8">
       <div className=" size-full flex flex-wrap align-middle justify-center">
-        <table className="w-fit text-2xl border-separate border-spacing-2 border border-slate-500">
-          <tr>
-            <th className="border border-slate-400 text-center p-3 px-6">Product ID</th>
-            <th className="border border-slate-400 text-center p-3  px-6">Product Name</th>
-            <th className="border border-slate-400 text-center p-3  px-6">Brand ID</th>
-            <th className="border border-slate-400 text-center p-3  px-6">View</th>
+        <table className="w-fit text-2xl p-2 rounded bg-black text-white border-separate border-spacing-2 border-slate-500">
+          <tr className="text-black">
+            <th className="rounded border border-slate-400 bg-[#F9C747] text-center p-3 px-6">
+              Product ID
+            </th>
+            <th className="rounded border border-slate-400 bg-[#F9C747]  text-center p-3  px-6">
+              Product Name
+            </th>
+            <th className="rounded border border-slate-400  bg-[#F9C747] text-center p-3  px-6">
+              Brand ID
+            </th>
+            <th className="rounded border border-slate-400 bg-[#F9C747]  text-center p-3  px-6">
+              Expiry Date
+            </th>
+            <th className="rounded border border-slate-400 bg-[#F9C747]  text-center p-3  px-6">View</th>
           </tr>
-          <tbody>{products && products.map((product) => <ProductRow {...product} />)}</tbody>
+          <tbody className="">{products && products.map((product) => <ProductRow {...product} />)}</tbody>
         </table>
       </div>
     </div>

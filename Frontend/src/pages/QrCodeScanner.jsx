@@ -36,7 +36,7 @@ function QrCodeScanner() {
           <QRScanner getURL={getQrURL} />
         </div>
         <div className=" pb-8 text-center">
-          <h4 className="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+          <h4 className="block mb-2 text-2xl antialiased font-semibold font-Cuprum leading-snug tracking-normal text-blue-gray-900">
             Scan QR Code
           </h4>
         </div>

@@ -7,7 +7,7 @@ function QrCode() {
   let qrurl;
 
   return (
-    <div className="flex justify-center align-middle">
+    <div className="flex min-h-screen justify-center align-middle">
       <div className=" mt-56 relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96  h-fit">
         <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-80">
           {QRCode.toDataURL(

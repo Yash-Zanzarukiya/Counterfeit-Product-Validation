@@ -8,7 +8,7 @@ const Input = React.forwardRef(function Input(
   return (
     <div className="w-full">
       {label && (
-        <label className="inline-block mb-4 pl-1" htmlFor={id}>
+        <label className=" capitalize inline-block mb-2 pl-1" htmlFor={id}>
           {required && <span className=" text-red-600 text-l">* </span>}
           {label}
         </label>
